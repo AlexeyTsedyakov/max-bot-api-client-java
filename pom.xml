@@ -5,7 +5,7 @@
 
     <groupId>ru.max</groupId>
     <artifactId>max-bot-api</artifactId>
-    <version>0.0.6-SNAPSHOT</version>
+    <version>0.0.6-SNAPSHOT-MOD-0.1</version>
 
     <name>Max Bot API Java Client</name>
     <description>Java library to build bots for Max messenger</description>
@@ -211,6 +211,7 @@
                     <excludedGroups>ru.max.botapi.IntegrationTest</excludedGroups>
                 </configuration>
             </plugin>
+<!--
             <plugin>
                 <groupId>org.eluder.coveralls</groupId>
                 <artifactId>coveralls-maven-plugin</artifactId>
@@ -219,6 +220,7 @@
                     <repoToken>${coveralls.token}</repoToken>
                 </configuration>
             </plugin>
+-->
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
