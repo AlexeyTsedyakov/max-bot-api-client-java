@@ -66,7 +66,7 @@ public class MaxClient implements Closeable {
 
     public static MaxClient create(String accessToken) {
         Objects.requireNonNull(accessToken, "No access token given. Get it using https://max.ru/MasterBot");
-        OkHttpTransportClient transport = new OkHttpTransportClient();
+        OkHttpTransportClient transport = new OkHttpTransportClient(accessToken);
         JacksonSerializer serializer = new JacksonSerializer();
         return new MaxClient(accessToken, transport, serializer);
     }
@@ -147,10 +147,6 @@ public class MaxClient implements Closeable {
         } else {
             sb.append('&');
         }
-
-        sb.append("access_token=").append(getAccessToken());
-        sb.append('&');
-        sb.append("v=").append(Version.get());
 
         List<QueryParam<?>> params = query.getParams();
         if (params == null) {

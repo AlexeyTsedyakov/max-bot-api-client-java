@@ -36,6 +36,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,9 +66,10 @@ public class OkHttpTransportClient implements MaxTransportClient {
 
     private final OkHttpClient httpClient;
 
-    public OkHttpTransportClient() {
+    public OkHttpTransportClient(String accessToken) {
         this(new OkHttpClient.Builder()
                 .addInterceptor(new AddUserAgent())
+                .addInterceptor(new AddAuthorization(accessToken))
                 .addInterceptor(new LoggingInterceptor())
                 .readTimeout(100, TimeUnit.SECONDS)
                 .callTimeout(100, TimeUnit.SECONDS)
@@ -238,6 +240,25 @@ public class OkHttpTransportClient implements MaxTransportClient {
             Request original = chain.request();
             Request request = original.newBuilder()
                     .header("User-Agent", USER_AGENT)
+                    .build();
+
+            return chain.proceed(request);
+        }
+    }
+
+    private static class AddAuthorization implements Interceptor {
+        private final String accessToken;
+
+        private AddAuthorization(String accessToken) {
+            this.accessToken = accessToken;
+        }
+
+        @NotNull
+        @Override
+        public Response intercept(@NotNull Chain chain) throws IOException {
+            Request original = chain.request();
+            Request request = original.newBuilder()
+                    .header("Authorization", accessToken)
                     .build();
 
             return chain.proceed(request);

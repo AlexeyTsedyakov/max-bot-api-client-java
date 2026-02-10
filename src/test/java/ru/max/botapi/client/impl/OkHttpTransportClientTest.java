@@ -29,7 +29,7 @@ import static spark.Spark.get;
 public class OkHttpTransportClientTest {
     @Test(expected = TransportClientException.class)
     public void shouldThrowException() throws Exception {
-        OkHttpTransportClient client = new OkHttpTransportClient();
+        OkHttpTransportClient client = new OkHttpTransportClient(MaxService.ACCESS_TOKEN);
         InputStream inputStream = mock(InputStream.class);
         IOException fakeException = new IOException("fake exception");
         when(inputStream.read(any(), anyInt(), anyInt())).thenThrow(fakeException);
@@ -47,8 +47,8 @@ public class OkHttpTransportClientTest {
             return "response";
         });
 
-        OkHttpTransportClient client = new OkHttpTransportClient();
-        Future<ClientResponse> futureResponse = client.get(MaxServer.ENDPOINT + path + "?access_token=" + MaxService.ACCESS_TOKEN);
+        OkHttpTransportClient client = new OkHttpTransportClient(MaxService.ACCESS_TOKEN);
+        Future<ClientResponse> futureResponse = client.get(MaxServer.ENDPOINT + path);
         org.apache.log4j.Logger logger4j = org.apache.log4j.Logger.getRootLogger();
         Level currentLevel = logger4j.getLevel();
         logger4j.setLevel(Level.DEBUG);

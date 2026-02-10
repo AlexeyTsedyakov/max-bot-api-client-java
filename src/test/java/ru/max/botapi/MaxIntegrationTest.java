@@ -112,7 +112,7 @@ public abstract class MaxIntegrationTest {
     private static final String TOKEN_3 = getToken("MAX_BOTAPI_TOKEN_3");
     private static final ConcurrentHashMap<String, List<Chat>> CHATS_BY_CLIENT = new ConcurrentHashMap<>();
 
-    private static final OkHttpTransportClient transportClient = new OkHttpTransportClient();
+    private static final OkHttpTransportClient transportClient = new OkHttpTransportClient(TOKEN_1);
     protected static final JacksonSerializer serializer;
     public static final long LAST_ACTIVITY_IGNORED = -1L;
 

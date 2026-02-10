@@ -20,7 +20,7 @@ import ru.max.botapi.server.MaxService;
 public class UnitTestBase extends MaxService {
     protected static final AtomicLong ID_COUNTER = new AtomicLong();
 
-    protected OkHttpTransportClient transport = new OkHttpTransportClient();
+    protected OkHttpTransportClient transport = new OkHttpTransportClient(MaxService.ACCESS_TOKEN);
     JacksonSerializer serializer = new JacksonSerializer();
     public final MaxClient client = new MaxClient(MaxService.ACCESS_TOKEN, transport, serializer) {
         @Override
